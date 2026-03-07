@@ -10,4 +10,8 @@ interface UserRepository
     public function findByUsername(string $email);
     public function create(array $data);
     public function update(int $id, array $data);
+
+    public function existsByUsername(string $username, ?int $ignoreId = null);
+    public function existsByEmail(string $email, ?int $ignoreId = null);
+
 }

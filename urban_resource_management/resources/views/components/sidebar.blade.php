@@ -1,4 +1,4 @@
-<div class="bg-light border text-black vh-100" style="width:250px; min-height:calc(100vh - 72px);">
+<div class="bg-light border" style="width:250px;">
 
     <style>
         .nav-link:hover {
@@ -17,7 +17,7 @@
         {{-- ADMIN --}}
         @if(auth()->user()->role_id === \App\Domain\Enums\RoleEnum::ADMIN)
             <li>
-                <a class="nav-link text-black p-3" href="#">
+                <a href="{{ route('users.index') }}" class="nav-link text-black p-3">
                     Usuarios
                 </a>
 
@@ -36,10 +36,13 @@
         {{-- ROUTE COORDINATOR --}}
         @if(
             auth()->user()->role_id === \App\Domain\Enums\RoleEnum::ROUTE_COORDINATOR
-            /*|| auth()->user()->role_id === \App\Domain\Enums\RoleEnum::ADMIN*/
+            || auth()->user()->role_id === \App\Domain\Enums\RoleEnum::ADMIN
         )
             <li>
-                <a class="nav-link text-black" href="#">
+                <a href="{{ route('zones.index') }}" class="nav-link text-black p-3">
+                    Zonas
+                </a>
+                <a href="{{ route('routes.index') }}" class="nav-link text-black p-3">
                     Rutas
                 </a>
             </li>
@@ -47,9 +50,12 @@
 
 
         {{-- OPERATOR --}}
-        @if(auth()->user()->role_id === \App\Domain\Enums\RoleEnum::OPERATOR)
+        @if(
+            auth()->user()->role_id === \App\Domain\Enums\RoleEnum::OPERATOR
+            || auth()->user()->role_id === \App\Domain\Enums\RoleEnum::ADMIN
+        )
             <li>
-                <a class="nav-link text-black" href="#">
+                <a href="{{ route('users.index') }}" class="nav-link text-black p-3">
                     Puntos Verdes
                 </a>
             </li>
@@ -58,16 +64,19 @@
         {{-- CIVIL --}}
         @if(auth()->user()->role_id === \App\Domain\Enums\RoleEnum::CIVIL)
             <li>
-                <a class="nav-link text-black" href="#">
+                <a href="#" class="nav-link text-black p-3">
                     Mis Reportes
                 </a>
             </li>
         @endif
 
         {{-- AUDITOR --}}
-        @if(auth()->user()->role_id === \App\Domain\Enums\RoleEnum::AUDITOR)
+        @if(
+            auth()->user()->role_id === \App\Domain\Enums\RoleEnum::AUDITOR
+            || auth()->user()->role_id === \App\Domain\Enums\RoleEnum::ADMIN
+        )
             <li>
-                <a class="nav-link text-black" href="#">
+                <a href="#" class="nav-link text-black p-3">
                     Reportes
                 </a>
             </li>

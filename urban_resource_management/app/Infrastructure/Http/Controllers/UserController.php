@@ -3,6 +3,8 @@
 namespace App\Infrastructure\Http\Controllers;
 
 use App\Application\Services\UserService;
+use App\Models\Role;
+use App\View\Support\Toast;
 use Illuminate\Http\Request;
 
 class UserController
@@ -19,12 +21,14 @@ class UserController
     {
         $users = $this->userService->findAll();
 
-        return view('users.index', compact('users'));
+        return view('pages.admin.users.index', compact('users'));
     }
 
     public function create()
     {
-        return view('users.form');
+        $roles = Role::all();
+
+        return view('pages.admin.users.form', compact('roles'));
     }
 
     public function store(Request $request)
@@ -33,30 +37,31 @@ class UserController
             'name' => 'required',
             'username' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:6',
+            'password' => 'required',
             'role_id' => 'required',
             'status_id' => 'required'
         ]);
 
         $this->userService->create($request->all());
 
-        return redirect()
-            ->route('users.index')
-            ->with('success', 'Usuario creado correctamente');
+        Toast::success('Usuario creado correctamente');
+
+        return redirect()->route('users.index');
     }
 
     public function show($id)
     {
         $user = $this->userService->findById($id);
 
-        return view('users.show', compact('user'));
+        return view('pages.admin.users.show', compact('user'));
     }
 
     public function edit($id)
     {
         $user = $this->userService->findById($id);
+        $roles = Role::all();
 
-        return view('users.form', compact('user'));
+        return view('pages.admin.users.form', compact('user'), compact('roles'));
     }
 
     public function update(Request $request, $id)
@@ -65,14 +70,14 @@ class UserController
             'name' => 'required',
             'username' => 'required',
             'email' => 'required|email',
-            'role_id' => 'required'
+            'role_id' => 'required',
+            'status_id' => 'required'
         ]);
 
         $this->userService->update($id, $request->all());
 
-        return redirect()
-            ->route('users.index')
-            ->with('success', 'Usuario actualizado');
+        Toast::success('Usuario actualizado correctamente');
+        return redirect()->route('users.index');
     }
 
     public function destroy($id)

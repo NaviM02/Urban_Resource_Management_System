@@ -32,7 +32,8 @@ class ZoneController
         $request->validate([
             'name' => 'required',
             'description' => 'nullable',
-            'status_id' => 'required'
+            'status_id' => 'required',
+            'zone_type_id' => 'required',
         ]);
 
         $this->zoneService->create($request->all());
@@ -61,7 +62,8 @@ class ZoneController
         $request->validate([
             'name' => 'required',
             'description' => 'nullable',
-            'status_id' => 'required'
+            'status_id' => 'required',
+            'zone_type_id' => 'required',
         ]);
 
         $this->zoneService->update($id, $request->all());

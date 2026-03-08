@@ -3,29 +3,25 @@
 namespace App\Models;
 
 use App\Domain\Enums\StatusEnum;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 
-class Zone extends Model
+class Truck extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'description',
+        'plate',
+        'capacity_tons',
+        'truck_status_id',
+        'driver_name',
         'status_id',
-        'zone_type_id',
     ];
 
-    public function routes()
+    public function truckStatus()
     {
-        return $this->hasMany(Route::class);
-    }
-
-    public function zoneTypes()
-    {
-        return $this->belongsTo(ZoneType::class);
+        return $this->belongsTo(TruckStatus::class);
     }
 
     protected static function booted()
@@ -34,4 +30,5 @@ class Zone extends Model
             $query->where('status_id', '!=', StatusEnum::DELETED);
         });
     }
+
 }

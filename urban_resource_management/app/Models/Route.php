@@ -52,4 +52,27 @@ class Route extends Model
             $query->where('status_id', '!=', StatusEnum::DELETED);
         });
     }
+
+    public function getCollectionDaysTextAttribute()
+    {
+        $names = [
+            'Lunes',
+            'Martes',
+            'Miércoles',
+            'Jueves',
+            'Viernes',
+            'Sábado',
+            'Domingo'
+        ];
+
+        $result = [];
+
+        foreach(str_split($this->collection_days) as $i => $value){
+            if($value === '1'){
+                $result[] = $names[$i];
+            }
+        }
+
+        return implode(', ', $result);
+    }
 }

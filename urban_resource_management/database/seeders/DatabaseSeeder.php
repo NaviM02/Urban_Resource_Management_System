@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             StatusSeeder::class,
             UserSeeder::class,
             WasteTypeSeeder::class,
+            TruckStatusSeeder::class,
+            ZoneTypeSeeder::class,
         ]);
     }
 }

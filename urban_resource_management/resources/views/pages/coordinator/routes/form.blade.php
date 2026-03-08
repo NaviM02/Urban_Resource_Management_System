@@ -220,6 +220,28 @@
 
         map.addControl(drawControl);
 
+        //style
+        const startIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+            iconSize: [25,41],
+            iconAnchor: [12,41],
+            popupAnchor: [1,-34],
+            shadowSize: [41,41]
+        });
+
+        const endIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+            iconSize: [25,41],
+            iconAnchor: [12,41],
+            popupAnchor: [1,-34],
+            shadowSize: [41,41]
+        });
+
+        let startMarker = null;
+        let endMarker = null;
+
         // save route
         map.on(L.Draw.Event.CREATED, function (event) {
 
@@ -243,6 +265,7 @@
 
             calculateDistance(coords);
 
+            updateStartEndMarkers(coords);
         }
 
         // calculate distance
@@ -259,6 +282,28 @@
             document.getElementById('distance').value =
                 (total/1000).toFixed(2);
 
+        }
+
+        function updateStartEndMarkers(coords){
+
+            if(startMarker){
+                map.removeLayer(startMarker);
+            }
+
+            if(endMarker){
+                map.removeLayer(endMarker);
+            }
+
+            let start = coords[0];
+            let end = coords[coords.length - 1];
+
+            startMarker = L.marker(start,{icon:startIcon})
+                .addTo(map)
+                .bindPopup("Inicio de ruta");
+
+            endMarker = L.marker(end,{icon:endIcon})
+                .addTo(map)
+                .bindPopup("Fin de ruta");
         }
 
         // for string days
@@ -321,6 +366,8 @@
                     map.fitBounds(polyline.getBounds());
 
                     calculateDistance(coords);
+
+                    updateStartEndMarkers(coords);
 
                 }
 

@@ -11,9 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('waste_types', function (Blueprint $table) {
+        Schema::create('incidences', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->foreignId('collection_id')
+                ->constrained('collections')
+                ->cascadeOnUpdate()
+                ->restrictOnDelete();
+            $table->string('description');
+
+            $table->timestamps();
         });
     }
 
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('waste_types');
+        Schema::dropIfExists('incidences');
     }
 };

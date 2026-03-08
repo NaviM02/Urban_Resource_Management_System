@@ -11,23 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('zone_types', function (Blueprint $table) {
+        Schema::create('truck_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
         });
 
-        Schema::create('zones', function (Blueprint $table) {
+        Schema::create('trucks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-
-            $table->foreignId('status_id')
-                ->constrained('statuses')
+            $table->string('plate');
+            $table->decimal('capacity_tons', 5, 2);
+            $table->foreignId('truck_status_id')
+                ->constrained('truck_statuses')
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
-
-            $table->foreignId('zone_type_id')
-                ->constrained('zone_types')
+            $table->string('driver_name');
+            $table->foreignId('status_id')
+                ->constrained('statuses')
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
 
@@ -40,7 +39,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('zones');
-        Schema::dropIfExists('zone_types');
+        Schema::dropIfExists('trucks');
+        Schema::dropIfExists('truck_statuses');
     }
 };

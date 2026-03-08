@@ -1,7 +1,9 @@
 <?php
 
 use App\Infrastructure\Http\Controllers\AuthController;
+use App\Infrastructure\Http\Controllers\CollectionController;
 use App\Infrastructure\Http\Controllers\RouteController;
+use App\Infrastructure\Http\Controllers\TruckController;
 use App\Infrastructure\Http\Controllers\UserController;
 use App\Infrastructure\Http\Controllers\ZoneController;
 use Illuminate\Support\Facades\Route;
@@ -67,4 +69,40 @@ Route::middleware('auth')->group(function () {
     Route::put('/routes/{id}', [RouteController::class,'update'])->name('routes.update');
 
     Route::delete('/routes/{id}', [RouteController::class,'destroy'])->name('routes.destroy');
+});
+
+// trucks
+Route::middleware('auth')->group(function () {
+
+    Route::get('/trucks', [TruckController::class,'index'])->name('trucks.index');
+
+    Route::get('/trucks/create', [TruckController::class,'create'])->name('trucks.create');
+    Route::post('/trucks', [TruckController::class,'store'])->name('trucks.store');
+
+    Route::get('/trucks/{id}', [TruckController::class,'show'])->name('trucks.show');
+
+    Route::get('/trucks/{id}/edit', [TruckController::class,'edit'])->name('trucks.edit');
+    Route::put('/trucks/{id}', [TruckController::class,'update'])->name('trucks.update');
+
+    Route::delete('/trucks/{id}', [TruckController::class,'destroy'])->name('trucks.destroy');
+});
+
+// collections
+Route::middleware('auth')->group(function () {
+
+    Route::get('/collections', [CollectionController::class,'index'])->name('collections.index');
+
+    Route::get('/collections/create', [CollectionController::class,'create'])->name('collections.create');
+    Route::post('/collections', [CollectionController::class,'store'])->name('collections.store');
+
+    Route::get('/collections/{id}', [CollectionController::class,'show'])->name('collections.show');
+
+    Route::post('/collections/{id}/start', [CollectionController::class,'start'])->name('collections.start');
+
+    Route::post('/collections/{id}/finish', [CollectionController::class,'finish'])->name('collections.finish');
+
+    Route::post('/collections/{id}/cancel', [CollectionController::class,'cancel'])->name('collections.cancel');
+
+    Route::post('/collections/{id}/incidence', [CollectionController::class,'addIncidence'])->name('collections.incidence');
+
 });

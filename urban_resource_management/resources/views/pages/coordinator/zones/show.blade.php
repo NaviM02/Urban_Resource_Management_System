@@ -38,6 +38,11 @@
                 />
 
                 <x-show-field
+                    label="Tipo de residuo"
+                    :value="$zone->zoneType->name"
+                />
+
+                <x-show-field
                     label="Descripción"
                     :value="$zone->description"
                 />

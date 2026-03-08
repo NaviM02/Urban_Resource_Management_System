@@ -46,6 +46,13 @@ class TruckController
         return redirect()->route('trucks.index');
     }
 
+    public function show($id)
+    {
+        $truck = $this->truckService->findById($id);
+
+        return view('pages.coordinator.routes.show', compact('truck'));
+    }
+
     public function edit($id)
     {
         $truck = $this->truckService->findById($id);

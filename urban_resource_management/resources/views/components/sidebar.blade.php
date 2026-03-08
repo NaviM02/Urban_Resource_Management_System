@@ -45,6 +45,12 @@
                 <a href="{{ route('routes.index') }}" class="nav-link text-black p-3">
                     Rutas
                 </a>
+                <a href="{{ route('trucks.index') }}" class="nav-link text-black p-3">
+                    Camiones
+                </a>
+                <a href="{{ route('collections.index') }}" class="nav-link text-black p-3">
+                    Recolección
+                </a>
             </li>
         @endif
 

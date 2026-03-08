@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Http\Controllers;
 
 use App\Application\Services\ZoneService;
+use App\Models\ZoneType;
 use App\View\Support\Toast;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,9 @@ class ZoneController
 
     public function create()
     {
-        return view('pages.coordinator.zones.form');
+        $zoneTypes = ZoneType::all();
+
+        return view('pages.coordinator.zones.form', compact('zoneTypes'));
     }
 
     public function store(Request $request)
@@ -53,8 +56,9 @@ class ZoneController
     public function edit($id)
     {
         $zone = $this->zoneService->findById($id);
+        $zoneTypes = ZoneType::all();
 
-        return view('pages.coordinator.zones.form', compact('zone'));
+        return view('pages.coordinator.zones.form', compact('zone'), compact('zoneTypes'));
     }
 
     public function update(Request $request, $id)

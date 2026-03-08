@@ -23,7 +23,7 @@ class Zone extends Model
         return $this->hasMany(Route::class);
     }
 
-    public function zoneTypes()
+    public function zoneType()
     {
         return $this->belongsTo(ZoneType::class);
     }

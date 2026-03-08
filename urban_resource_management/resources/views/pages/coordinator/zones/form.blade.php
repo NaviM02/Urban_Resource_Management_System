@@ -55,6 +55,26 @@
                     </div>
 
                     <div class="col-12 col-lg-6 mb-3">
+                        <label>Tipo de zona</label>
+
+                        <select name="zone_type_id" class="form-select" required>
+
+                            @foreach($zoneTypes as $type)
+
+                                <option value="{{ $type->id }}"
+                                    @selected(old('zone_type_id', $zone->zone_type_id ?? '') == $type->id)>
+
+                                    {{ $type->name }}
+
+                                </option>
+
+                            @endforeach
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-12 col-lg-6 mb-3">
 
                         <label>Descripción</label>
 

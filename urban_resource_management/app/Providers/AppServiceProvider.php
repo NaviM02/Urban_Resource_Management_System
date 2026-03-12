@@ -4,14 +4,22 @@ namespace App\Providers;
 
 use App\Domain\Repositories\CollectionPointRepository;
 use App\Domain\Repositories\CollectionRepository;
+use App\Domain\Repositories\ContainerRepository;
+use App\Domain\Repositories\GreenPointRepository;
 use App\Domain\Repositories\IncidenceRepository;
+use App\Domain\Repositories\MaterialDeliveryRepository;
+use App\Domain\Repositories\MaterialTypeRepository;
 use App\Domain\Repositories\RouteRepository;
 use App\Domain\Repositories\TruckRepository;
 use App\Domain\Repositories\UserRepository;
 use App\Domain\Repositories\ZoneRepository;
 use App\Infrastructure\Persistence\Repositories\DbCollectionPointRepository;
 use App\Infrastructure\Persistence\Repositories\DbCollectionRepository;
+use App\Infrastructure\Persistence\Repositories\DbContainerRepository;
+use App\Infrastructure\Persistence\Repositories\DbGreenPointRepository;
 use App\Infrastructure\Persistence\Repositories\DbIncidenceRepository;
+use App\Infrastructure\Persistence\Repositories\DbMaterialDeliveryRepository;
+use App\Infrastructure\Persistence\Repositories\DbMaterialTypeRepository;
 use App\Infrastructure\Persistence\Repositories\DbRouteRepository;
 use App\Infrastructure\Persistence\Repositories\DbTruckRepository;
 use App\Infrastructure\Persistence\Repositories\DbUserRepository;
@@ -58,6 +66,26 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             IncidenceRepository::class,
             DbIncidenceRepository::class
+        );
+
+        $this->app->bind(
+            GreenPointRepository::class,
+            DbGreenPointRepository::class
+        );
+
+        $this->app->bind(
+            ContainerRepository::class,
+            DbContainerRepository::class
+        );
+
+        $this->app->bind(
+            MaterialTypeRepository::class,
+            DbMaterialTypeRepository::class
+        );
+
+        $this->app->bind(
+            MaterialDeliveryRepository::class,
+            DbMaterialDeliveryRepository::class
         );
     }
 

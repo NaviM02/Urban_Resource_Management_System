@@ -2,6 +2,8 @@
 
 use App\Infrastructure\Http\Controllers\AuthController;
 use App\Infrastructure\Http\Controllers\CollectionController;
+use App\Infrastructure\Http\Controllers\GreenPointController;
+use App\Infrastructure\Http\Controllers\MaterialDeliveryController;
 use App\Infrastructure\Http\Controllers\RouteController;
 use App\Infrastructure\Http\Controllers\TruckController;
 use App\Infrastructure\Http\Controllers\UserController;
@@ -106,3 +108,39 @@ Route::middleware('auth')->group(function () {
     Route::post('/collections/{id}/incidence', [CollectionController::class,'addIncidence'])->name('collections.incidence');
 
 });
+
+// green points
+Route::middleware('auth')->group(function () {
+
+    Route::get('/green-points', [GreenPointController::class,'index'])
+        ->name('green-points.index');
+
+    Route::get('/green-points/create', [GreenPointController::class,'create'])
+        ->name('green-points.create');
+
+    Route::post('/green-points', [GreenPointController::class,'store'])
+        ->name('green-points.store');
+
+    Route::get('/green-points/{id}', [GreenPointController::class,'show'])
+        ->name('green-points.show');
+
+    Route::get('/green-points/{id}/edit', [GreenPointController::class,'edit'])
+        ->name('green-points.edit');
+
+    Route::put('/green-points/{id}', [GreenPointController::class,'update'])
+        ->name('green-points.update');
+
+    Route::post('/green-points/delivery', [GreenPointController::class,'registerDelivery'])
+        ->name('green-points.delivery');
+
+    Route::delete('/green-points/{id}', [GreenPointController::class,'destroy'])
+        ->name('green-points.destroy');
+
+});
+
+// deliveries
+Route::middleware('auth')->group(function () {
+    Route::post('/deliveries', [MaterialDeliveryController::class,'store'])
+        ->name('deliveries.store');
+});
+

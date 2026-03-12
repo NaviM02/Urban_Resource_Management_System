@@ -1,0 +1,45 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('green_points', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('address');
+            $table->foreignId('status_id')
+                ->constrained('statuses')
+                ->cascadeOnUpdate()
+                ->restrictOnDelete();
+            $table->decimal('lat',10,7);
+            $table->decimal('lng',10,7);
+            $table->decimal('capacity_m3',8,2)->nullable();
+            $table->time('open_time');
+            $table->time('close_time');
+            $table->string('open_days');
+            $table->foreignId('manager_user_id')
+                ->nullable()
+                ->constrained('users')
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
+
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('green_points');
+    }
+};

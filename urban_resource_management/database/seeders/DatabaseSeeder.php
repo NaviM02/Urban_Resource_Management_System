@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             TruckStatusSeeder::class,
             ZoneTypeSeeder::class,
             CollectionStatusSeeder::class,
+            MaterialTypeSeeder::class,
         ]);
     }
 }

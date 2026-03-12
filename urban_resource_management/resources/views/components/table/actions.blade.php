@@ -1,25 +1,38 @@
+@props([
+    'id',
+    'viewRoute' => null,
+    'editRoute' => null,
+    'deleteRoute' => null
+])
+
 <div class="d-flex gap-2">
 
-    <a href="{{ route($viewRoute, $id) }}"
-       class="btn btn-sm btn-outline-secondary">
-        Ver
-    </a>
+    @if($viewRoute)
+        <a href="{{ route($viewRoute, $id) }}"
+           class="btn btn-sm btn-outline-secondary">
+            Ver
+        </a>
+    @endif
 
-    <a href="{{ route($editRoute, $id) }}"
-       class="btn btn-sm btn-outline-primary">
-        Editar
-    </a>
+    @if ($editRoute)
+        <a href="{{ route($editRoute, $id) }}"
+           class="btn btn-sm btn-outline-primary">
+            Editar
+        </a>
+    @endif
 
-    <form method="POST"
-          action="{{ route($deleteRoute, $id) }}"
-          onsubmit="return confirm('¿Eliminar registro?')">
+    @if($deleteRoute)
+        <form method="POST"
+              action="{{ route($deleteRoute, $id) }}"
+              onsubmit="return confirm('¿Eliminar registro?')">
 
-        @csrf
-        @method('DELETE')
+            @csrf
+            @method('DELETE')
 
-        <button class="btn btn-sm btn-outline-danger">
-            Eliminar
-        </button>
-    </form>
+            <button class="btn btn-sm btn-outline-danger">
+                Eliminar
+            </button>
+        </form>
+    @endif
 
 </div>

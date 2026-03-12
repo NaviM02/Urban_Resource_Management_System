@@ -37,12 +37,18 @@ class CollectionController
         $request->validate([
             'route_id' => 'required',
             'truck_id' => 'required',
-            'scheduled_date' => 'required',
+            'scheduled_date' => 'required|date',
+            'weeks' => 'required|integer|min:1|max:12',
         ]);
 
-        $this->collectionService->create($request->all());
+        $this->collectionService->generateCollections(
+            $request->route_id,
+            $request->truck_id,
+            $request->scheduled_date,
+            $request->weeks
+        );
 
-        Toast::success('Recolección creada y puntos generados');
+        Toast::success('Recolecciones programadas correctamente');
 
         return redirect()->route('collections.index');
     }
@@ -79,7 +85,9 @@ class CollectionController
     public function finish(Request $request, $id)
     {
         $request->validate([
-            'observations' => 'nullable'
+            'observations' => 'nullable',
+            'incidents' => 'nullable|array',
+            'incidents.*' => 'nullable|string'
         ]);
 
         $this->collectionService->finish($id, $request->all());

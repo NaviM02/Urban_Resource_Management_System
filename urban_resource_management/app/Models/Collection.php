@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domain\Enums\CollectionStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,6 +44,17 @@ class Collection extends Model
     public function incidences()
     {
         return $this->hasMany(Incidence::class);
+    }
+
+    public function getStatusBadgeClass(): string
+    {
+        return match ($this->collection_status_id) {
+            CollectionStatusEnum::SCHEDULED => 'bg-secondary',
+            CollectionStatusEnum::IN_PROGRESS => 'bg-primary',
+            CollectionStatusEnum::COMPLETED => 'bg-success',
+            CollectionStatusEnum::INCOMPLETED => 'bg-danger',
+            default => 'bg-dark'
+        };
     }
 
 }

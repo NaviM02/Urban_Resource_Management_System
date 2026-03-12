@@ -50,7 +50,7 @@ class TruckController
     {
         $truck = $this->truckService->findById($id);
 
-        return view('pages.coordinator.routes.show', compact('truck'));
+        return view('pages.coordinator.trucks.show', compact('truck'));
     }
 
     public function edit($id)

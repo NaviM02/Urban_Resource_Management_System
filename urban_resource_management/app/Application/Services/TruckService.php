@@ -31,8 +31,6 @@ class TruckService
             throw new EntityAlreadyExistsException('Truck plate already exists');
         }
 
-        $data['status_id'] = StatusEnum::ACTIVE;
-
         return $this->truckRepository->create($data);
     }
 

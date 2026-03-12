@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Domain\Enums\StatusEnum;
+use App\Domain\Enums\TruckStatusEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +30,17 @@ class Truck extends Model
         static::addGlobalScope('notDeleted', function (Builder $query) {
             $query->where('status_id', '!=', StatusEnum::DELETED);
         });
+    }
+
+    public function getStatusBadgeClass(): string
+    {
+        return match ($this->truck_status_id) {
+            TruckStatusEnum::OPERATIONAL => 'bg-success',
+            TruckStatusEnum::MAINTENANCE => 'bg-warning text-dark',
+            TruckStatusEnum::OUT_OF_SERVICE => 'bg-danger',
+            TruckStatusEnum::DELETED => 'bg-secondary',
+            default => 'bg-dark'
+        };
     }
 
 }

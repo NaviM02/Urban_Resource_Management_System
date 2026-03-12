@@ -59,8 +59,6 @@ class RouteService
         $data['lat_end'] = $last[0];
         $data['lng_end'] = $last[1];
 
-        $data['status_id'] = StatusEnum::ACTIVE;
-
         return $this->routeRepository->create($data);
     }
 

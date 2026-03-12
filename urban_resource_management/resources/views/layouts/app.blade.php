@@ -26,6 +26,7 @@
             flex: 1;
             display: flex;
             min-height: 0;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -38,7 +39,7 @@
 
     @include('components.sidebar')
 
-    <div class="flex-grow-1 px-4 pb-3 bg-light d-flex flex-column">
+    <div class="flex-grow-1 px-4 pb-3 bg-light d-flex flex-column overflow-auto">
         @yield('content')
     </div>
 

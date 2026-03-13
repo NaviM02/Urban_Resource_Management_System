@@ -54,4 +54,22 @@ class ReportService
         return $this->reportRepository->getRecyclingTrend();
     }
 
+    public function getComplaintsStatusSummary()
+    {
+        return $this->reportRepository
+            ->getComplaintsStatusSummary();
+    }
+
+    public function getAverageAttentionTime()
+    {
+        return $this->reportRepository
+            ->getAverageAttentionTime();
+    }
+
+    public function getCriticalZones()
+    {
+        return $this->reportRepository
+            ->getCriticalZones();
+    }
+
 }

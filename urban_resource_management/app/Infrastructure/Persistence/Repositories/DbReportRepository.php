@@ -112,5 +112,56 @@ class DbReportRepository implements ReportRepository
             ->get();
     }
 
+    // complaints
+    public function getComplaintsStatusSummary()
+    {
+        return DB::table('complaints')
+            ->select(
+                DB::raw("
+                SUM(
+                    CASE
+                        WHEN complaint_status_id IN (5,6)
+                        THEN 1 ELSE 0
+                    END
+                ) as attended
+            "),
+                DB::raw("
+                SUM(
+                    CASE
+                        WHEN complaint_status_id NOT IN (5,6)
+                        THEN 1 ELSE 0
+                    END
+                ) as pending
+            ")
+            )
+            ->first();
+    }
+
+    public function getAverageAttentionTime()
+    {
+        return DB::table('complaint_assignments')
+            ->whereNotNull('started_at')
+            ->whereNotNull('finished_at')
+            ->select(
+                DB::raw(
+                    'AVG(TIMESTAMPDIFF(HOUR, started_at, finished_at)) as avg_hours'
+                )
+            )
+            ->first();
+    }
+
+    public function getCriticalZones()
+    {
+        return DB::table('complaints')
+            ->select(
+                'address as zone',
+                DB::raw('COUNT(*) as total')
+            )
+            ->whereNotNull('address')
+            ->groupBy('address')
+            ->orderByDesc('total')
+            ->get();
+    }
+
 
 }

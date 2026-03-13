@@ -245,4 +245,21 @@ Route::prefix('reports')->middleware('auth')->group(function(){
         '/recycling/trend',
         [ReportController::class,'recyclingTrend']
     )->name('reports.recycling.trend');
+
+    // complaints
+    Route::get(
+        '/complaints/status',
+        [ReportController::class,'complaintsStatus']
+    )->name('reports.complaints.status');
+
+    Route::get(
+        '/complaints/time',
+        [ReportController::class,'complaintsAverageTime']
+    )->name('reports.complaints.time');
+
+    Route::get(
+        '/complaints/zones',
+        [ReportController::class,'complaintsCriticalZones']
+    )->name('reports.complaints.zones');
+
 });

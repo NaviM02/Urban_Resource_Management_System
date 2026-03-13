@@ -121,4 +121,39 @@ class ReportController
         );
     }
 
+    public function complaintsStatus()
+    {
+        $data = $this->reportService
+            ->getComplaintsStatusSummary();
+
+        return view(
+            'pages.reports.complaints-status',
+            compact('data')
+        );
+    }
+
+    public function complaintsAverageTime()
+    {
+        $data = $this->reportService
+            ->getAverageAttentionTime();
+
+        return view(
+            'pages.reports.complaints-time',
+            compact('data')
+        );
+    }
+
+    public function complaintsCriticalZones()
+    {
+        $data = $this->reportService
+            ->getCriticalZones();
+
+        return view(
+            'pages.reports.complaints-zone',
+            compact('data')
+        );
+    }
+
+
+
 }

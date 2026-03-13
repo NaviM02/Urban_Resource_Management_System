@@ -24,11 +24,9 @@
                 <a href="{{ route('cleaning-staff.index') }}" class="nav-link text-black p-3">
                     Personal de Limpieza
                 </a>
+
                 <a href="{{ route('admin.complaints.index')  }}" class="nav-link text-black p-3">
                     Denuncias
-                </a>
-                <a class="nav-link text-black p-3" href="#">
-                    Auditoría de actividades
                 </a>
         @endif
 
@@ -151,6 +149,37 @@
                         </li>
 
                     </ul>
+
+                    <a class="nav-link text-black p-3" href="#reportsMenu">
+                        Reportes Denuncias
+                    </a>
+
+                    <div id="reportsMenu">
+
+                        <ul class="nav flex-column ms-3">
+
+                            <li class="nav-item ">
+                                <a class="nav-link text-black"
+                                   href="{{ route('reports.complaints.status') }}">
+                                    Denuncias atentidads vs pendientes
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-black"
+                                   href="{{ route('reports.complaints.time') }}">
+                                    Tiempo promedio de atención
+                                </a>
+                            </li>
+
+                            <li class="nav-item ">
+                                <a class="nav-link text-black"
+                                   href="{{ route('reports.complaints.zones') }}">
+                                    Zonas críticas
+                                </a>
+                            </li>
+
+                        </ul>
 
                 </div>
             </li>

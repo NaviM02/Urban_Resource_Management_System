@@ -185,8 +185,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/complaints/{id}/assign', [ComplaintController::class,'assign'])
         ->name('admin.complaints.assign');
 
-    Route::post('/admin/complaints/{id}/status', [ComplaintController::class,'updateStatus'])
-        ->name('admin.complaints.status');
+    Route::post('/admin/complaints/{id}/start-cleaning', [ComplaintController::class,'startCleaning'])
+        ->name('admin.complaints.startCleaning');
+
+    Route::post('/admin/complaints/{id}/attended', [ComplaintController::class,'markAttended'])
+        ->name('admin.complaints.attended');
+
+    Route::post('/admin/complaints/{id}/close', [ComplaintController::class,'closeComplaint'])
+        ->name('admin.complaints.close');
 
 
     // citizen

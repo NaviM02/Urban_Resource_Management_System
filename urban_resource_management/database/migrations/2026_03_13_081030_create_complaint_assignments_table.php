@@ -35,6 +35,8 @@ return new class extends Migration
             $table->date('scheduled_date');
             $table->string('estimated_resources')->nullable();
             $table->text('notes')->nullable();
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('finished_at')->nullable();
 
             $table->timestamps();
         });

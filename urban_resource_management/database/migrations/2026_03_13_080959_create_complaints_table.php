@@ -29,7 +29,8 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
 
-            $table->string('photo_path')->nullable();
+            $table->string('photo_before')->nullable();
+            $table->string('photo_after')->nullable();
             $table->foreignId('complaint_status_id')
                 ->constrained('complaint_statuses')
                 ->cascadeOnUpdate()

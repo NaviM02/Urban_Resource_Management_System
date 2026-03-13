@@ -16,7 +16,8 @@ class Complaint extends Model
         'description',
         'dump_size',
         'citizen_id',
-        'photo_path',
+        'photo_before',
+        'photo_after',
         'complaint_status_id',
         'complaint_date'
     ];
@@ -33,6 +34,6 @@ class Complaint extends Model
 
     public function assignment()
     {
-        return $this->hasOne(ComplaintAssignment::class);
+        return $this->hasOne(ComplaintAssignment::class)->with('staff');
     }
 }

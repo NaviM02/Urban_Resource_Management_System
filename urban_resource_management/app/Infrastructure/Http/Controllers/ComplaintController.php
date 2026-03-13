@@ -68,7 +68,7 @@ class ComplaintController
                 'complaints',
                 'public'
             );
-            $data['photo_path'] = $path;
+            $data['photo_before'] = $path;
         }
 
         $data['citizen_id'] = auth()->id();
@@ -84,6 +84,8 @@ class ComplaintController
 
     public function show($id)
     {
+        $this->complaintService->startReview($id);
+
         $complaint = $this->complaintService->findById($id);
 
         $staff = $this->cleaningStaffService->findAvailable();
@@ -118,19 +120,43 @@ class ComplaintController
         return back();
     }
 
-    public function updateStatus(Request $request, $id)
+    public function startCleaning($id)
     {
-        $request->validate([
-            'complaint_status_id' => 'required'
-        ]);
+        $this->complaintService->startCleaning($id);
 
-        $this->complaintService->update($id, [
-            'complaint_status_id' => $request->complaint_status_id
-        ]);
-
-        Toast::success('Estado actualizado');
+        Toast::success('La cuadrilla inició el trabajo');
 
         return back();
     }
+
+    public function markAttended($id)
+    {
+        $this->complaintService->markAttended($id);
+
+        Toast::success('La limpieza fue completada');
+
+        return back();
+    }
+
+    public function closeComplaint(Request $request, $id)
+    {
+        $request->validate([
+            'photo_after' => 'required|image'
+        ]);
+
+        $path = $request->file('photo_after')->store(
+            'complaints',
+            'public'
+        );
+
+        $this->complaintService->closeComplaint($id, [
+            'photo_after' => $path
+        ]);
+
+        Toast::success('Caso cerrado');
+
+        return back();
+    }
+
 
 }

@@ -10,8 +10,12 @@ class ComplaintAssignment extends Model
         'complaint_id',
         'scheduled_date',
         'estimated_resources',
-        'notes'
+        'notes',
+        'started_at',
+        'finished_at'
     ];
+
+    protected $with = ['staff'];
 
     public function complaint()
     {

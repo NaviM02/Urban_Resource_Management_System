@@ -5,14 +5,14 @@ namespace App\Domain\Enums;
 enum ComplaintStatusEnum: int {
     public const RECEIVE = 1;
 
-    public const REVISION = 2;
+    public const REVIEW = 2;
 
-    public const ASSIGN = 3;
+    public const ASSIGNED = 3;
 
 
-    public const IN_ATTENTION = 4;
+    public const IN_PROGRESS = 4;
 
     public const ATTENDED = 5;
 
-    public const CLOSE = 6;
+    public const CLOSED = 6;
 }

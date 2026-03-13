@@ -33,4 +33,12 @@ class DbComplaintRepository implements ComplaintRepository
         return $complaint;
     }
 
+    public function findByCitizen($citizenId)
+    {
+        return Complaint::with('status')
+            ->where('citizen_id', $citizenId)
+            ->orderBy('complaint_date', 'desc')
+            ->get();
+    }
+
 }

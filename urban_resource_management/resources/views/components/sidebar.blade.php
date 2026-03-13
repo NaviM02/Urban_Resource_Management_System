@@ -1,4 +1,4 @@
-<div class="bg-light border" style="width:250px;">
+<div class="bg-light border overflow-auto" style="width:250px;">
 
     <style>
         .nav-link:hover {
@@ -24,8 +24,8 @@
                 <a href="{{ route('cleaning-staff.index') }}" class="nav-link text-black p-3">
                     Personal de Limpieza
                 </a>
-                <a class="nav-link text-black p-3" href="#">
-                    Generación de reportes
+                <a href="{{ route('admin.complaints.index')  }}" class="nav-link text-black p-3">
+                    Denuncias
                 </a>
                 <a class="nav-link text-black p-3" href="#">
                     Auditoría de actividades
@@ -71,10 +71,13 @@
         @endif
 
         {{-- CIVIL --}}
-        @if(auth()->user()->role_id === \App\Domain\Enums\RoleEnum::CIVIL)
+        @if(auth()->user()->role_id === \App\Domain\Enums\RoleEnum::ADMIN)
             <li>
                 <a href="#" class="nav-link text-black p-3">
-                    Mis Reportes
+                    Rutas
+                </a>
+                <a href="{{ route('citizen.complaints.index')  }}" class="nav-link text-black p-3">
+                    Denuncias
                 </a>
             </li>
         @endif
@@ -85,7 +88,7 @@
             || auth()->user()->role_id === \App\Domain\Enums\RoleEnum::ADMIN
         )
             <li>
-                <a href="#" class="nav-link text-black p-3">
+                <a href="#" class="nav-link text-black p-3 mb-4">
                     Reportes
                 </a>
             </li>

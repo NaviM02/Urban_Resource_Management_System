@@ -172,6 +172,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
+// complaints
 Route::middleware('auth')->group(function () {
 
     // admin
@@ -197,5 +198,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/citizen/complaints', [ComplaintController::class,'store'])
         ->name('citizen.complaints.store');
+
+    Route::get('/citizen/complaints/{id}', [ComplaintController::class,'citizenShow'])
+        ->name('citizen.complaints.show');
 
 });

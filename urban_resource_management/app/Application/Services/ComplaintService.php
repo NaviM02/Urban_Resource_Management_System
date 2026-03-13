@@ -66,4 +66,10 @@ class ComplaintService
         return $assignment;
     }
 
+    public function findByCitizen(int $citizenId)
+    {
+        return $this->complaintRepository->findByCitizen($citizenId);
+    }
+
+
 }

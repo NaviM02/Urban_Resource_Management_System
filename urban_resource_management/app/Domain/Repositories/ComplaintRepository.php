@@ -9,4 +9,6 @@ interface ComplaintRepository
     public function create(array $data);
     public function update($id, array $data);
 
+    public function findByCitizen($citizenId);
+
 }

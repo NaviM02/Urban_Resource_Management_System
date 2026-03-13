@@ -4,6 +4,7 @@ namespace App\Infrastructure\Http\Controllers;
 
 use App\Application\Services\ComplaintService;
 use App\Application\Services\CleaningStaffService;
+use App\Domain\Enums\ComplaintStatusEnum;
 use App\View\Support\Toast;
 use Illuminate\Http\Request;
 
@@ -35,7 +36,7 @@ class ComplaintController
     // CITIZEN LIST
     public function citizenIndex()
     {
-        $complaints = $this->complaintService->findAll();
+        $complaints = $this->complaintService->findByCitizen(auth()->id());
 
         return view(
             'pages.citizen.complaints.index',
@@ -61,8 +62,17 @@ class ComplaintController
 
         $data = $request->all();
 
+        if ($request->hasFile('photo')) {
+
+            $path = $request->file('photo')->store(
+                'complaints',
+                'public'
+            );
+            $data['photo_path'] = $path;
+        }
+
         $data['citizen_id'] = auth()->id();
-        $data['complaint_status_id'] = 1;
+        $data['complaint_status_id'] = ComplaintStatusEnum::RECEIVE;
         $data['complaint_date'] = now();
 
         $this->complaintService->create($data);
@@ -81,6 +91,16 @@ class ComplaintController
         return view(
             'pages.admin.complaints.show',
             compact('complaint','staff')
+        );
+    }
+
+    public function citizenShow($id)
+    {
+        $complaint = $this->complaintService->findById($id);
+
+        return view(
+            'pages.citizen.complaints.show',
+            compact('complaint')
         );
     }
 

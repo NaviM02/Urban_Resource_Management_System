@@ -24,6 +24,11 @@ class DatabaseSeeder extends Seeder
             CollectionStatusSeeder::class,
             MaterialTypeSeeder::class,
             ComplaintStatusSeeder::class,
+            ZoneSeeder::class,
+            ComplaintSeeder::class,
+            GreenPointSeeder::class,
+            RouteSeeder::class,
+            TruckSeeder::class,
         ]);
     }
 }

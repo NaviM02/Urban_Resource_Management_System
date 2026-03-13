@@ -15,5 +15,10 @@ interface ReportRepository
 
     public function tonsByRoute($startDate, $endDate);
 
+    // Green Point Reports
+    public function getRecycledByMaterial();
+    public function getMostActiveGreenPoints();
+    public function getRecyclingTrend();
+
 
 }

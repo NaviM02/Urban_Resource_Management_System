@@ -39,4 +39,37 @@ class ReportService
         return $this->reportRepository->tonsByRoute($start,$end);
     }
 
+    public function getRecycledByMaterial()
+    {
+        return $this->reportRepository->getRecycledByMaterial();
+    }
+
+    public function getMostActiveGreenPoints()
+    {
+        return $this->reportRepository->getMostActiveGreenPoints();
+    }
+
+    public function getRecyclingTrend()
+    {
+        return $this->reportRepository->getRecyclingTrend();
+    }
+
+    public function getComplaintsStatusSummary()
+    {
+        return $this->reportRepository
+            ->getComplaintsStatusSummary();
+    }
+
+    public function getAverageAttentionTime()
+    {
+        return $this->reportRepository
+            ->getAverageAttentionTime();
+    }
+
+    public function getCriticalZones()
+    {
+        return $this->reportRepository
+            ->getCriticalZones();
+    }
+
 }

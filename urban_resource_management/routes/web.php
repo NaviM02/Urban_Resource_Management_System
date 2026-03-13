@@ -214,6 +214,7 @@ Route::middleware('auth')->group(function () {
 // reports
 Route::prefix('reports')->middleware('auth')->group(function(){
 
+    // collection
     Route::get(
         '/period',
         [ReportController::class,'byPeriod']
@@ -228,5 +229,37 @@ Route::prefix('reports')->middleware('auth')->group(function(){
         '/route',
         [ReportController::class,'byRoute']
     )->name('reports.route');
+
+    // green point
+    Route::get(
+        '/recycling/materials',
+        [ReportController::class,'recycledByMaterial']
+    )->name('reports.recycling.materials');
+
+    Route::get(
+        '/recycling/green-points',
+        [ReportController::class,'mostActiveGreenPoints']
+    )->name('reports.recycling.green-points');
+
+    Route::get(
+        '/recycling/trend',
+        [ReportController::class,'recyclingTrend']
+    )->name('reports.recycling.trend');
+
+    // complaints
+    Route::get(
+        '/complaints/status',
+        [ReportController::class,'complaintsStatus']
+    )->name('reports.complaints.status');
+
+    Route::get(
+        '/complaints/time',
+        [ReportController::class,'complaintsAverageTime']
+    )->name('reports.complaints.time');
+
+    Route::get(
+        '/complaints/zones',
+        [ReportController::class,'complaintsCriticalZones']
+    )->name('reports.complaints.zones');
 
 });

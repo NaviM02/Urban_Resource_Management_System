@@ -187,7 +187,7 @@ class CollectionService
     public function cancel($id, array $data)
     {
         $data['collection_status_id'] = CollectionStatusEnum::INCOMPLETED;
-        $data['finished_at'] = now()->format('H:i:s');
+        $data['finished_at'] = now()->addHours(rand(1,3))->addMinutes(rand(10,50))->format('H:i:s');
 
         $this->addIncidents($id, $data);
 

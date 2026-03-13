@@ -70,4 +70,98 @@ class DbReportRepository implements ReportRepository
             ->orderBy('tons','desc')
             ->get();
     }
+
+    // GREEN POINT
+    public function getRecycledByMaterial()
+    {
+        return DB::table('material_deliveries as md')
+            ->join('containers as c','md.container_id','=','c.id')
+            ->join('material_types as mt','c.material_type_id','=','mt.id')
+            ->select(
+                'mt.name as material',
+                DB::raw('SUM(md.quantity_kg) as total_kg')
+            )
+            ->groupBy('mt.name')
+            ->orderByDesc('total_kg')
+            ->get();
+    }
+
+    public function getMostActiveGreenPoints()
+    {
+        return DB::table('material_deliveries as md')
+            ->join('green_points as gp','md.green_point_id','=','gp.id')
+            ->select(
+                'gp.name as green_point',
+                DB::raw('SUM(md.quantity_kg) as total_kg'),
+                DB::raw('COUNT(md.id) as deliveries')
+            )
+            ->groupBy('gp.name')
+            ->orderByDesc('total_kg')
+            ->get();
+    }
+
+    public function getRecyclingTrend()
+    {
+        return DB::table('material_deliveries')
+            ->select(
+                DB::raw('DATE(delivered_at) as day'),
+                DB::raw('SUM(quantity_kg) as total_kg')
+            )
+            ->groupBy(DB::raw('DATE(delivered_at)'))
+            ->orderBy('day')
+            ->get();
+    }
+
+    // complaints
+    public function getComplaintsStatusSummary()
+    {
+        return DB::table('complaints')
+            ->select(
+                DB::raw("
+                SUM(
+                    CASE
+                        WHEN complaint_status_id IN (5,6)
+                        THEN 1 ELSE 0
+                    END
+                ) as attended
+            "),
+                DB::raw("
+                SUM(
+                    CASE
+                        WHEN complaint_status_id NOT IN (5,6)
+                        THEN 1 ELSE 0
+                    END
+                ) as pending
+            ")
+            )
+            ->first();
+    }
+
+    public function getAverageAttentionTime()
+    {
+        return DB::table('complaint_assignments')
+            ->whereNotNull('started_at')
+            ->whereNotNull('finished_at')
+            ->select(
+                DB::raw(
+                    'AVG(TIMESTAMPDIFF(HOUR, started_at, finished_at)) as avg_hours'
+                )
+            )
+            ->first();
+    }
+
+    public function getCriticalZones()
+    {
+        return DB::table('complaints')
+            ->select(
+                'address as zone',
+                DB::raw('COUNT(*) as total')
+            )
+            ->whereNotNull('address')
+            ->groupBy('address')
+            ->orderByDesc('total')
+            ->get();
+    }
+
+
 }

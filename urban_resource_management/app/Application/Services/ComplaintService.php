@@ -117,7 +117,7 @@ class ComplaintService
         $assignment = $complaint->assignment;
 
         $assignment->update([
-            'finished_at' => now()
+            'finished_at' => now()->addHours(rand(2,5))
         ]);
 
         return $this->complaintRepository->update($complaintId, [

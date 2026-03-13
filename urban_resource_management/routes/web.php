@@ -115,6 +115,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/green-points', [GreenPointController::class,'index'])
         ->name('green-points.index');
 
+    Route::get('/green-points-map', [GreenPointController::class,'map'])
+        ->name('green-points-map.index');
+
+    Route::post('/containers/empty', [GreenPointController::class,'emptyContainer'])
+        ->name('containers.empty');
+
     Route::get('/green-points/create', [GreenPointController::class,'create'])
         ->name('green-points.create');
 
@@ -138,9 +144,4 @@ Route::middleware('auth')->group(function () {
 
 });
 
-// deliveries
-Route::middleware('auth')->group(function () {
-    Route::post('/deliveries', [MaterialDeliveryController::class,'store'])
-        ->name('deliveries.store');
-});
 

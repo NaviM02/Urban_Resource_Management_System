@@ -51,50 +51,52 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 <!-- toaster -->
-<x-toast />
+@if(session('toasts'))
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+
+        @foreach(session('toasts') as $toast)
+
+            <div class="toast align-items-center text-white border-0
+             bg-{{ $toast['type'] === 'error' ? 'danger' : $toast['type'] }}"
+                 role="alert">
+
+                <div class="d-flex">
+
+                    <div class="toast-body">
+                        {{ $toast['message'] }}
+                    </div>
+
+                    <button type="button"
+                            class="btn-close btn-close-white me-2 m-auto"
+                            data-bs-dismiss="toast">
+                    </button>
+
+                </div>
+
+            </div>
+
+        @endforeach
+
+    </div>
+
+    @php
+        session()->forget('toasts');
+    @endphp
+@endif
 <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-        const toastEl = document.getElementById('appToast');
+        const toastElements = document.querySelectorAll('.toast');
 
-        if (!toastEl) return;
+        toastElements.forEach(el => {
 
-        window.showToast = function(message, type = 'info') {
-
-            const body = toastEl.querySelector('.toast-body');
-            body.textContent = message;
-
-            toastEl.classList.remove(
-                'text-bg-success',
-                'text-bg-danger',
-                'text-bg-warning',
-                'text-bg-info'
-            );
-
-            const map = {
-                success: 'text-bg-success',
-                error: 'text-bg-danger',
-                warning: 'text-bg-warning',
-                info: 'text-bg-info'
-            };
-
-            toastEl.classList.add(map[type] ?? map.info);
-
-            const toast = new bootstrap.Toast(toastEl, {
+            const toast = new bootstrap.Toast(el, {
                 delay: 4000
             });
 
             toast.show();
-        };
 
-        @if(session('error'))
-        document.addEventListener('DOMContentLoaded', function () {
-            showToast(
-                @json(session('toast.message')),
-                @json(session('toast.type'))
-            );
         });
-        @endif
 
     });
 </script>

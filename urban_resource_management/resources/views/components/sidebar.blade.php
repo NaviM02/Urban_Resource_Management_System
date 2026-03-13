@@ -61,8 +61,11 @@
             || auth()->user()->role_id === \App\Domain\Enums\RoleEnum::ADMIN
         )
             <li>
-                <a href="{{ route('users.index') }}" class="nav-link text-black p-3">
+                <a href="{{ route('green-points.index') }}" class="nav-link text-black p-3">
                     Puntos Verdes
+                </a>
+                <a href="{{ route('green-points-map.index') }}" class="nav-link text-black p-3">
+                    Mapa Puntos Verdes
                 </a>
             </li>
         @endif

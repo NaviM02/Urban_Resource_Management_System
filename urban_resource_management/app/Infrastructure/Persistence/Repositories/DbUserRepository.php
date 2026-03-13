@@ -38,6 +38,11 @@ class DbUserRepository implements UserRepository
         return $user;
     }
 
+    public function findByRole(int $roleId)
+    {
+        return User::where('role_id',$roleId)->get();
+    }
+
     public function existsByUsername(string $username, ?int $ignoreId = null): bool
     {
         return User::where('username', $username)

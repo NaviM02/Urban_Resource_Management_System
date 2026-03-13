@@ -106,7 +106,6 @@ class GreenPointService
             throw new \InvalidArgumentException('Container capacity exceeded');
         }
 
-        // guardar entrega
         $this->deliveryRepository->create([
             'green_point_id' => $data['green_point_id'],
             'container_id' => $data['container_id'],
@@ -116,11 +115,23 @@ class GreenPointService
             'delivered_at' => now()
         ]);
 
-        // actualizar llenado
         $this->containerRepository->update($container->id, [
             'current_kg' => $newAmount
         ]);
 
+    }
+
+    public function emptyContainer($containerId)
+    {
+        $container = $this->containerRepository->findById($containerId);
+
+        if(!$container){
+            throw new EntityNotFoundException('Container not found');
+        }
+
+        $this->containerRepository->update($containerId, [
+            'current_kg' => 0
+        ]);
     }
 
 }

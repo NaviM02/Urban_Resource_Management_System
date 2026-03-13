@@ -2,6 +2,7 @@
 
 namespace App\Application\Services;
 
+use App\Domain\Enums\RoleEnum;
 use App\Domain\Enums\StatusEnum;
 use App\Domain\Exceptions\EntityAlreadyExistsException;
 use App\Domain\Exceptions\EntityNotFoundException;
@@ -20,6 +21,16 @@ class UserService
     public function findAll()
     {
         return $this->userRepository->findAll();
+    }
+
+    public function findCivils()
+    {
+        return $this->userRepository->findByRole(RoleEnum::CIVIL);
+    }
+
+    public function findOperators()
+    {
+        return $this->userRepository->findByRole(RoleEnum::OPERATOR);
     }
 
     public function findById($id)

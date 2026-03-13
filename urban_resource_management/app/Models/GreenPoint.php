@@ -20,7 +20,6 @@ class GreenPoint extends Model
         'capacity_m3',
         'open_time',
         'close_time',
-        'open_days',
         'manager_user_id',
     ];
 

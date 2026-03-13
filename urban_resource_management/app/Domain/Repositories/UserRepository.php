@@ -11,6 +11,8 @@ interface UserRepository
     public function create(array $data);
     public function update(int $id, array $data);
 
+    public function findByRole(int $roleId);
+
     public function existsByUsername(string $username, ?int $ignoreId = null);
     public function existsByEmail(string $email, ?int $ignoreId = null);
 

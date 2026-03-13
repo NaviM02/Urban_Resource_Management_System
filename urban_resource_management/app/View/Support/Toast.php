@@ -4,35 +4,35 @@ namespace App\View\Support;
 
 class Toast
 {
+    protected static function add(string $type, string $message)
+    {
+        $toasts = session()->get('toasts', []);
+
+        $toasts[] = [
+            'type' => $type,
+            'message' => $message
+        ];
+
+        session()->put('toasts', $toasts);
+    }
+
     public static function success(string $message)
     {
-        session()->flash('toast', [
-            'type' => 'success',
-            'message' => $message
-        ]);
+        self::add('success', $message);
     }
 
     public static function error(string $message)
     {
-        session()->flash('toast', [
-            'type' => 'error',
-            'message' => $message
-        ]);
+        self::add('error', $message);
     }
 
     public static function info(string $message)
     {
-        session()->flash('toast', [
-            'type' => 'info',
-            'message' => $message
-        ]);
+        self::add('info', $message);
     }
 
     public static function warning(string $message)
     {
-        session()->flash('toast', [
-            'type' => 'warning',
-            'message' => $message
-        ]);
+        self::add('warning', $message);
     }
 }

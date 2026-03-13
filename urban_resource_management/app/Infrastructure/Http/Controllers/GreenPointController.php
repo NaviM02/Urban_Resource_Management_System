@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Http\Controllers;
 
 use App\Application\Services\GreenPointService;
+use App\Application\Services\UserService;
 use App\Models\User;
 use App\View\Support\Toast;
 use Illuminate\Http\Request;
@@ -10,10 +11,14 @@ use Illuminate\Http\Request;
 class GreenPointController
 {
     private GreenPointService $greenPointService;
+    private UserService $userService;
 
-    public function __construct(GreenPointService $greenPointService)
-    {
+    public function __construct(
+        GreenPointService $greenPointService,
+        UserService $userService
+    ){
         $this->greenPointService = $greenPointService;
+        $this->userService = $userService;
     }
 
     public function index()
@@ -23,9 +28,19 @@ class GreenPointController
         return view('pages.operator.green-points.index', compact('greenPoints'));
     }
 
+    public function map()
+    {
+        $greenPoints = $this->greenPointService->findAll();
+
+        return view(
+            'pages.operator.green-points-map.index',
+            compact('greenPoints')
+        );
+    }
+
     public function create()
     {
-        $managers = User::all();
+        $managers = $this->userService->findOperators();
 
         return view('pages.operator.green-points.form', compact('managers'));
     }
@@ -37,6 +52,7 @@ class GreenPointController
             'address' => 'required',
             'lat' => 'required',
             'lng' => 'required',
+            'capacity_m3' => 'required',
             'open_time' => 'required',
             'close_time' => 'required',
         ]);
@@ -51,8 +67,37 @@ class GreenPointController
     public function show($id)
     {
         $greenPoint = $this->greenPointService->findById($id);
+        $users = $this->userService->findCivils();
 
-        return view('pages.operator.green-points.show', compact('greenPoint'));
+        foreach ($greenPoint->containers as $container) {
+
+            if ($container->capacity_kg == 0) {
+                continue;
+            }
+
+            $percent = ($container->current_kg / $container->capacity_kg) * 100;
+
+            $material = $container->materialType->name;
+
+            if ($percent >= 100) {
+
+                Toast::error("Contenedor lleno ($material). Requiere atención inmediata");
+
+            } elseif ($percent >= 90) {
+
+                Toast::warning("Contenedor casi lleno ($material). Programar vaciado");
+
+            } elseif ($percent >= 75) {
+
+                Toast::info("Contenedor al 75% ($material). Alerta temprana");
+
+            }
+        }
+
+        return view(
+            'pages.operator.green-points.show',
+            compact('greenPoint','users')
+        );
     }
 
     public function edit($id)
@@ -74,6 +119,7 @@ class GreenPointController
             'address' => 'required',
             'lat' => 'required',
             'lng' => 'required',
+            'capacity_m3' => 'required',
             'open_time' => 'required',
             'close_time' => 'required',
         ]);
@@ -91,15 +137,30 @@ class GreenPointController
             'green_point_id' => 'required',
             'container_id' => 'required',
             'quantity_kg' => 'required|numeric|min:1',
-            'citizen_code' => 'nullable'
+            'user_id' => 'nullable|exists:users,id',
+            'citizen_code' => 'nullable|string'
         ]);
 
-        $this->greenPointService->registerDelivery([
-            ...$request->all(),
-            'user_id' => auth()->id()
-        ]);
+        if (!$request->user_id && !$request->citizen_code) {
+            return back()->withErrors([
+                'citizen_code' => 'Debe ingresar usuario o DPI'
+            ]);
+        }
+
+        $this->greenPointService->registerDelivery($request->all());
 
         Toast::success('Material registrado correctamente');
+
+        return back();
+    }
+
+    public function emptyContainer(Request $request)
+    {
+        $containerId = $request->container_id;
+
+        $this->greenPointService->emptyContainer($containerId);
+
+        Toast::success('Contenedor vaciado');
 
         return back();
     }

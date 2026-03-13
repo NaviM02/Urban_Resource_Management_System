@@ -15,6 +15,7 @@ class MaterialDelivery extends Model
         'quantity_kg',
         'user_id',
         'citizen_code',
+        'delivered_at',
     ];
 
     public function user()

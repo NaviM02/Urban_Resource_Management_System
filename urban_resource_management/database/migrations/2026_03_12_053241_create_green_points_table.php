@@ -24,7 +24,6 @@ return new class extends Migration
             $table->decimal('capacity_m3',8,2)->nullable();
             $table->time('open_time');
             $table->time('close_time');
-            $table->string('open_days');
             $table->foreignId('manager_user_id')
                 ->nullable()
                 ->constrained('users')

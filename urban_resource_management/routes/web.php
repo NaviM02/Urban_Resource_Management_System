@@ -1,7 +1,9 @@
 <?php
 
 use App\Infrastructure\Http\Controllers\AuthController;
+use App\Infrastructure\Http\Controllers\CleaningStaffController;
 use App\Infrastructure\Http\Controllers\CollectionController;
+use App\Infrastructure\Http\Controllers\ComplaintController;
 use App\Infrastructure\Http\Controllers\GreenPointController;
 use App\Infrastructure\Http\Controllers\MaterialDeliveryController;
 use App\Infrastructure\Http\Controllers\RouteController;
@@ -144,4 +146,56 @@ Route::middleware('auth')->group(function () {
 
 });
 
+// cleaningStaff
+Route::middleware('auth')->group(function () {
 
+    Route::get('/cleaning-staff', [CleaningStaffController::class,'index'])
+        ->name('cleaning-staff.index');
+
+    Route::get('/cleaning-staff/create', [CleaningStaffController::class,'create'])
+        ->name('cleaning-staff.create');
+
+    Route::post('/cleaning-staff', [CleaningStaffController::class,'store'])
+        ->name('cleaning-staff.store');
+
+    Route::get('/cleaning-staff/{id}', [CleaningStaffController::class,'show'])
+        ->name('cleaning-staff.show');
+
+    Route::get('/cleaning-staff/{id}/edit', [CleaningStaffController::class,'edit'])
+        ->name('cleaning-staff.edit');
+
+    Route::put('/cleaning-staff/{id}', [CleaningStaffController::class,'update'])
+        ->name('cleaning-staff.update');
+
+    Route::delete('/cleaning-staff/{id}', [CleaningStaffController::class,'destroy'])
+        ->name('cleaning-staff.destroy');
+
+});
+
+Route::middleware('auth')->group(function () {
+
+    // admin
+    Route::get('/admin/complaints', [ComplaintController::class,'index'])
+        ->name('admin.complaints.index');
+
+    Route::get('/admin/complaints/{id}', [ComplaintController::class,'show'])
+        ->name('admin.complaints.show');
+
+    Route::post('/admin/complaints/{id}/assign', [ComplaintController::class,'assign'])
+        ->name('admin.complaints.assign');
+
+    Route::post('/admin/complaints/{id}/status', [ComplaintController::class,'updateStatus'])
+        ->name('admin.complaints.status');
+
+
+    // citizen
+    Route::get('/citizen/complaints', [ComplaintController::class,'citizenIndex'])
+        ->name('citizen.complaints.index');
+
+    Route::get('/citizen/complaints/create', [ComplaintController::class,'create'])
+        ->name('citizen.complaints.create');
+
+    Route::post('/citizen/complaints', [ComplaintController::class,'store'])
+        ->name('citizen.complaints.store');
+
+});

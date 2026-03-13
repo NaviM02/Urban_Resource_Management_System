@@ -21,8 +21,8 @@
                     Usuarios
                 </a>
 
-                <a class="nav-link text-black p-3" href="#">
-                    Configuración del sistema
+                <a href="{{ route('cleaning-staff.index') }}" class="nav-link text-black p-3">
+                    Personal de Limpieza
                 </a>
                 <a class="nav-link text-black p-3" href="#">
                     Generación de reportes

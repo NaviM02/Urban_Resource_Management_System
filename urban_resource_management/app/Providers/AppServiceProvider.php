@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Domain\Repositories\CleaningStaffRepository;
 use App\Domain\Repositories\CollectionPointRepository;
 use App\Domain\Repositories\CollectionRepository;
+use App\Domain\Repositories\ComplaintAssignmentRepository;
+use App\Domain\Repositories\ComplaintRepository;
 use App\Domain\Repositories\ContainerRepository;
 use App\Domain\Repositories\GreenPointRepository;
 use App\Domain\Repositories\IncidenceRepository;
@@ -13,8 +16,10 @@ use App\Domain\Repositories\RouteRepository;
 use App\Domain\Repositories\TruckRepository;
 use App\Domain\Repositories\UserRepository;
 use App\Domain\Repositories\ZoneRepository;
+use App\Infrastructure\Persistence\Repositories\DbCleaningStaffRepository;
 use App\Infrastructure\Persistence\Repositories\DbCollectionPointRepository;
 use App\Infrastructure\Persistence\Repositories\DbCollectionRepository;
+use App\Infrastructure\Persistence\Repositories\DbComplaintRepository;
 use App\Infrastructure\Persistence\Repositories\DbContainerRepository;
 use App\Infrastructure\Persistence\Repositories\DbGreenPointRepository;
 use App\Infrastructure\Persistence\Repositories\DbIncidenceRepository;
@@ -87,6 +92,17 @@ class AppServiceProvider extends ServiceProvider
             MaterialDeliveryRepository::class,
             DbMaterialDeliveryRepository::class
         );
+
+        $this->app->bind(
+            CleaningStaffRepository::class,
+            DbCleaningStaffRepository::class
+        );
+
+        $this->app->bind(
+            ComplaintRepository::class,
+            DbComplaintRepository::class
+        );
+
     }
 
     /**

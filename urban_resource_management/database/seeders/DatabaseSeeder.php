@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ZoneTypeSeeder::class,
             CollectionStatusSeeder::class,
             MaterialTypeSeeder::class,
+            ComplaintStatusSeeder::class,
         ]);
     }
 }

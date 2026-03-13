@@ -6,6 +6,7 @@ use App\Infrastructure\Http\Controllers\CollectionController;
 use App\Infrastructure\Http\Controllers\ComplaintController;
 use App\Infrastructure\Http\Controllers\GreenPointController;
 use App\Infrastructure\Http\Controllers\MaterialDeliveryController;
+use App\Infrastructure\Http\Controllers\ReportController;
 use App\Infrastructure\Http\Controllers\RouteController;
 use App\Infrastructure\Http\Controllers\TruckController;
 use App\Infrastructure\Http\Controllers\UserController;
@@ -207,5 +208,25 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/citizen/complaints/{id}', [ComplaintController::class,'citizenShow'])
         ->name('citizen.complaints.show');
+
+});
+
+// reports
+Route::prefix('reports')->middleware('auth')->group(function(){
+
+    Route::get(
+        '/period',
+        [ReportController::class,'byPeriod']
+    )->name('reports.period');
+
+    Route::get(
+        '/zone',
+        [ReportController::class,'byZone']
+    )->name('reports.zone');
+
+    Route::get(
+        '/route',
+        [ReportController::class,'byRoute']
+    )->name('reports.route');
 
 });

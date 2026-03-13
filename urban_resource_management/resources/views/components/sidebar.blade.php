@@ -87,12 +87,45 @@
             auth()->user()->role_id === \App\Domain\Enums\RoleEnum::AUDITOR
             || auth()->user()->role_id === \App\Domain\Enums\RoleEnum::ADMIN
         )
-            <li>
-                <a href="#" class="nav-link text-black p-3 mb-4">
+            <li class="nav-item">
+                <a class="nav-link text-black p-3" href="#reportsMenu">
                     Reportes
                 </a>
+
+                <div  id="reportsMenu">
+
+                    <ul class="nav flex-column ms-3">
+
+                        <li class="nav-item ">
+                            <a class="nav-link text-black"
+                               href="{{ route('reports.period') }}">
+                                Por período
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-black"
+                               href="{{ route('reports.zone') }}">
+                                Por zona
+                            </a>
+                        </li>
+
+                        <li class="nav-item ">
+                            <a class="nav-link text-black"
+                               href="{{ route('reports.route') }}">
+                                Por ruta
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
             </li>
         @endif
+
+        <li class="nav-item m-3">
+
+        </li>
 
     </ul>
 

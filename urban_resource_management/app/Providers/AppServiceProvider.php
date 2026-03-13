@@ -12,6 +12,7 @@ use App\Domain\Repositories\GreenPointRepository;
 use App\Domain\Repositories\IncidenceRepository;
 use App\Domain\Repositories\MaterialDeliveryRepository;
 use App\Domain\Repositories\MaterialTypeRepository;
+use App\Domain\Repositories\ReportRepository;
 use App\Domain\Repositories\RouteRepository;
 use App\Domain\Repositories\TruckRepository;
 use App\Domain\Repositories\UserRepository;
@@ -25,6 +26,7 @@ use App\Infrastructure\Persistence\Repositories\DbGreenPointRepository;
 use App\Infrastructure\Persistence\Repositories\DbIncidenceRepository;
 use App\Infrastructure\Persistence\Repositories\DbMaterialDeliveryRepository;
 use App\Infrastructure\Persistence\Repositories\DbMaterialTypeRepository;
+use App\Infrastructure\Persistence\Repositories\DbReportRepository;
 use App\Infrastructure\Persistence\Repositories\DbRouteRepository;
 use App\Infrastructure\Persistence\Repositories\DbTruckRepository;
 use App\Infrastructure\Persistence\Repositories\DbUserRepository;
@@ -101,6 +103,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ComplaintRepository::class,
             DbComplaintRepository::class
+        );
+
+        $this->app->bind(
+            ReportRepository::class,
+            DbReportRepository::class
         );
 
     }

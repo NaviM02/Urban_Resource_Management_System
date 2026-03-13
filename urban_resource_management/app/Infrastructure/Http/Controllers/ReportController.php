@@ -88,4 +88,37 @@ class ReportController
 
     }
 
+    public function recycledByMaterial()
+    {
+        $data = $this->reportService
+            ->getRecycledByMaterial();
+
+        return view(
+            'pages.reports.recycle-material',
+            compact('data')
+        );
+    }
+
+    public function mostActiveGreenPoints()
+    {
+        $data = $this->reportService
+            ->getMostActiveGreenPoints();
+
+        return view(
+            'pages.reports.recycle-green-points',
+            compact('data')
+        );
+    }
+
+    public function recyclingTrend()
+    {
+        $data = $this->reportService
+            ->getRecyclingTrend();
+
+        return view(
+            'pages.reports.recycle-trend',
+            compact('data')
+        );
+    }
+
 }

@@ -70,4 +70,47 @@ class DbReportRepository implements ReportRepository
             ->orderBy('tons','desc')
             ->get();
     }
+
+    // GREEN POINT
+    public function getRecycledByMaterial()
+    {
+        return DB::table('material_deliveries as md')
+            ->join('containers as c','md.container_id','=','c.id')
+            ->join('material_types as mt','c.material_type_id','=','mt.id')
+            ->select(
+                'mt.name as material',
+                DB::raw('SUM(md.quantity_kg) as total_kg')
+            )
+            ->groupBy('mt.name')
+            ->orderByDesc('total_kg')
+            ->get();
+    }
+
+    public function getMostActiveGreenPoints()
+    {
+        return DB::table('material_deliveries as md')
+            ->join('green_points as gp','md.green_point_id','=','gp.id')
+            ->select(
+                'gp.name as green_point',
+                DB::raw('SUM(md.quantity_kg) as total_kg'),
+                DB::raw('COUNT(md.id) as deliveries')
+            )
+            ->groupBy('gp.name')
+            ->orderByDesc('total_kg')
+            ->get();
+    }
+
+    public function getRecyclingTrend()
+    {
+        return DB::table('material_deliveries')
+            ->select(
+                DB::raw('DATE(delivered_at) as day'),
+                DB::raw('SUM(quantity_kg) as total_kg')
+            )
+            ->groupBy(DB::raw('DATE(delivered_at)'))
+            ->orderBy('day')
+            ->get();
+    }
+
+
 }

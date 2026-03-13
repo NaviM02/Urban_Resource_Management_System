@@ -89,7 +89,7 @@
         )
             <li class="nav-item">
                 <a class="nav-link text-black p-3" href="#reportsMenu">
-                    Reportes
+                    Reportes Recoleccion
                 </a>
 
                 <div  id="reportsMenu">
@@ -114,6 +114,39 @@
                             <a class="nav-link text-black"
                                href="{{ route('reports.route') }}">
                                 Por ruta
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <a class="nav-link text-black p-3" href="#reportsMenu">
+                    Reportes Punto Verde
+                </a>
+
+                <div  id="reportsMenu">
+
+                    <ul class="nav flex-column ms-3">
+
+                        <li class="nav-item ">
+                            <a class="nav-link text-black"
+                               href="{{ route('reports.recycling.materials') }}">
+                                Material reciclado
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-black"
+                               href="{{ route('reports.recycling.green-points') }}">
+                                Puntos verdes activos
+                            </a>
+                        </li>
+
+                        <li class="nav-item ">
+                            <a class="nav-link text-black"
+                               href="{{ route('reports.recycling.trend') }}">
+                                Tendencia de reciclaje
                             </a>
                         </li>
 
